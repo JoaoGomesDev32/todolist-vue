@@ -1,47 +1,70 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <v-app>
+    <v-container class="py-4">
+      <v-card class="pa-4">
+        <h1 class="text-center mb-4">To-Do List</h1>
+        <v-row>
+          <v-col cols="4">
+            <h2>To Do</h2>
+            <task-card
+              v-for="(task, index) in tasks.todo"
+              :key="index"
+              :task="task"
+              @delete="deleteTask('todo', index)"
+            />
+          </v-col>
+          <v-col cols="4">
+            <h2>In Progress</h2>
+            <task-card
+              v-for="(task, index) in tasks.inProgress"
+              :key="index"
+              :task="task"
+              @delete="deleteTask('inProgress', index)"
+            />
+          </v-col>
+          <v-col cols="4">
+            <h2>Done</h2>
+            <task-card
+              v-for="(task, index) in tasks.done"
+              :key="index"
+              :task="task"
+              @delete="deleteTask('done', index)"
+            />
+          </v-col>
+        </v-row>
+        <v-footer class="mt-4">
+          <span class="text-center">© 2024 João Gomes</span>
+        </v-footer>
+      </v-card>
+    </v-container>
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script lang="ts">
+import TaskCard from "./components/TaskCard.vue";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+export default {
+  components: { TaskCard },
+  data() {
+    return {
+      tasks: {
+        todo: [{ title: "Treinar" }],
+        inProgress: [{ title: "Ler um livro" }],
+        done: [{ title: "Comprar mantimentos" }],
+      },
+    };
+  },
+  methods: {
+    deleteTask(list, index) {
+      this.tasks[list].splice(index, 1);
+    },
+  },
+};
+</script>
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+h1 {
+  font-family: "Roboto", sans-serif;
+  color: #1976d2;
 }
 </style>
