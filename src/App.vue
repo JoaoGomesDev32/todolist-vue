@@ -45,7 +45,7 @@ import TaskCard from "./components/TaskCard.vue";
 
 export default {
   components: { TaskCard },
-  data() {
+  data(): { tasks: { todo: { title: string }[], inProgress: { title: string }[], done: { title: string }[] } } {
     return {
       tasks: {
         todo: [{ title: "Treinar" }],
@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    deleteTask(list, index) {
+    deleteTask(list: 'todo' | 'inProgress' | 'done', index: number) {
       this.tasks[list].splice(index, 1);
     },
   },
@@ -66,5 +66,19 @@ export default {
 h1 {
   font-family: "Roboto", sans-serif;
   color: #1976d2;
+}
+h2 {
+  font-family: "Roboto", sans-serif;
+  color: #424242;
+}
+
+.v-card {
+  background-color: #f5f5f5;
+}
+
+.v-footer {
+  background-color: #1976d2;
+  color: white;
+  padding: 10px;
 }
 </style>
